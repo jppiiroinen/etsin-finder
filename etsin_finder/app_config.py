@@ -119,17 +119,16 @@ def get_fairdata_rems_api_config(is_testing):
 
     return rems_conf
 
-
-def get_metax_api_config(is_testing):
+def _get_api_config(is_testing, config):
     """
-    Get Metax API config.
+    Get API config.
 
     :return:
     """
     if executing_travis() or is_testing:
         return None
 
-    metax_api_conf = get_app_config(is_testing).get('METAX_API', False)
+    metax_api_conf = get_app_config(is_testing).get(config, False)
     if not metax_api_conf or not isinstance(metax_api_conf, dict):
         return None
 
@@ -138,3 +137,19 @@ def get_metax_api_config(is_testing):
         return None
 
     return metax_api_conf
+
+def get_metax_api_config(is_testing):
+    """
+    Get Metax API config.
+
+    :return:
+    """
+    return _get_api_config(is_testing, 'METAX_API')
+
+def get_metax_qvain_api_config(is_testing):
+    """
+    Get Metax API config.
+
+    :return:
+    """
+    return _get_api_config(is_testing, 'METAX_QVAIN_API')
